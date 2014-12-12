@@ -1,0 +1,127 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: #FFF;
+}
+#container-map {
+    width: 100%;
+    height: 100%;
+    opacity: 0.25;
+    position: fixed;
+    z-index: -1;
+}
+.navbar-blue {
+    border-radius: 0;
+    border: 0;
+    margin-bottom: 0;
+    background-color: #020004;
+}
+.navbar-header {
+    font-weight: 300;
+    font-size: 2.8rem;
+    line-height: 5rem;
+}
+.navbar-header em {
+    font-style: italic;
+    font-size: 1.8rem;
+    color: #00ABE8;
+}
+.navbar-user {
+    width: 223px;
+    text-align: right;
+}
+.dropdown-ehr {
+    margin-right: 15px;
+}
+.dropdown-ehr .dropdown-toggle .fa {
+    padding-right: 5px;
+}
+.dropdown-ehr .dropdown-toggle {
+    font-size: 1.7rem;
+    font-weight: 300;
+    line-height: 5rem;
+    color: #FFF;
+    cursor: pointer;
+}
+.dropdown-ehr .dropdown-toggle:hover,
+.open .dropdown-toggle {
+    color: #00ABE8;
+    text-decoration: none;
+    background-color: transparent !important;
+}
+.ehr-toggle {
+    display: inline-block;
+    padding-top: 12px;
+}
+#ehr-toggle-button {
+    background-color: #00ABE8;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+.container-wide {
+    background-color: #FFF;
+    padding-bottom: 15px;
+    border: 1px solid #E2E3E7;
+    border-top-width: 0;
+}
+.container-middle {
+    text-align: center;
+}
+.container-properties {
+    background-color: #00ABE8;
+    line-height: 2rem;
+    font-size: 1.2rem;
+}
+.property {
+    float: left;
+    padding: 8px 25px 8px 25px;
+    text-align: center;
+    cursor: pointer;
+}
+.property:hover,
+.property-active {
+    background-color: #020004;
+}
+.property:first-child {
+    padding-left: 25px;
+}
+.property-text {
+    display: block;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    line-height: 2.6rem;
+    opacity: 0.7;
+}
+.property-value {
+    font-size: 2.6rem;
+    font-weight: 600;
+    opacity: 0.95;
+}
+h2 {
+    padding-top: 10px;
+    font-size: 1.7rem;
+    line-height: 1.8rem;
+    font-style: italic;
+}
+.title-blue {
+    color: #020004;
+}
+.title-light-blue {
+    color: #00ABE8;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.x.axis path {
+    display: none;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
