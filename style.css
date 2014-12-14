@@ -60,6 +60,7 @@ body {
     cursor: pointer;
 }
 .container-wide {
+    display: none;
     background-color: #FFF;
     padding-bottom: 15px;
     border: 1px solid #E2E3E7;
@@ -77,11 +78,15 @@ body {
     float: left;
     padding: 8px 25px 8px 25px;
     text-align: center;
-    cursor: pointer;
 }
 .property:hover,
 .property-active {
     background-color: #020004;
+    cursor: pointer
+}
+.property-no-hover:hover {
+    background-color: inherit;
+    cursor: default;
 }
 .property:first-child {
     padding-left: 25px;
@@ -93,8 +98,10 @@ body {
     line-height: 2.6rem;
     opacity: 0.7;
 }
-.property-value {
+.property-value,
+.property-value .fa {
     font-size: 2.6rem;
+    line-height: 2.6rem;
     font-weight: 600;
     opacity: 0.95;
 }

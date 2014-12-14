@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <title>OIS Health</title>
+	    <title>OIS Health /preview/</title>
+        <link rel="icon" type="image/icon" href="favicon.ico" />
         <meta charset="utf-8"/>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 	    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
@@ -20,6 +21,8 @@
         <script src="app/platform.js"></script>
         <script src="app/location.js"></script>
         <script src="app/map.js"></script>
+        <script src="app/ehr.js"></script>
+        <script src="app/ehrData.js"></script>
         <script src="app/main.js"></script>
 	</head>
 	<body>
@@ -39,12 +42,10 @@
                 <div class="nav navbar-nav navbar-right navbar-user">
                     <div class="dropdown dropdown-ehr">
                         <a class="dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-                            <i class="fa fa-user"></i> John Doe
+                            <i class="fa fa-user"></i> <span id="dropdown-selected">Loading</span>
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bill Gates</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Marissa Mayer</a></li>
+                        <ul id="dropdown-selector" class="dropdown-menu" role="menu">
                         </ul>
                     </div>
                 </div>
@@ -59,7 +60,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="clearfix container-properties">
-                        <div class="property">
+                        <div class="property property-no-hover">
+                            <span class="property-text">gender</span>
+                            <span class="property-value" id="property-gender"><i class="fa fa-female"></i></span>
+                        </div>
+                        <div class="property property-no-hover">
                             <span class="property-text">age</span>
                             <span class="property-value" id="property-age">24</span>
                         </div>
@@ -70,6 +75,10 @@
                         <div class="property" title="Switch to weight chart">
                             <span class="property-text">weight</span>
                             <span class="property-value" id="property-weight">80 kg</span>
+                        </div>
+                        <div class="property" title="Switch to BMI chart">
+                            <span class="property-text">BMI</span>
+                            <span class="property-value" id="property-bmi">25</span>
                         </div>
                         <div class="property" title="Switch to temperature chart">
                             <span class="property-text">temp.</span>
