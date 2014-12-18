@@ -11,7 +11,7 @@ function loadSelector(currentEhrId, ehrObjects) {
     }
 }
 
-function ehrDataLoaded(ehrData) {
+function ehrDataLoaded(ehr, ehrData, chart) {
     var containerWide = $('.container-wide');
     var containerMap = $('#container-map');
     var toggleButton = $('#ehr-toggle-button');
@@ -41,6 +41,10 @@ function ehrDataLoaded(ehrData) {
 
     // Update people selector
     loadSelector(currentEhrId, ehrData.get());
+
+    ehr.getEntries(currentEhrId, 'height', function(data) {
+        chart.lineChart('#chart', data);
+    }, null);
 }
 
 $(document).ready(function() {
@@ -71,75 +75,19 @@ $(document).ready(function() {
 
     map.render('container-map');
 
-    var ehrData = new EhrData();
+    var ehr = new Ehr();
+    var ehrData = new EhrData(ehr);
+    var chart = new Chart();
 
     // Check for EHR data (ehrId's to use in the application)
     // and regenerate it when neccessary.
     if (!ehrData.isAvailable()) {
         $('#ehr-toggle-button').text('Generating dummy EHR data...');
-        ehrData.generateData(ehrDataLoaded);
-    } else {
-        ehrDataLoaded(ehrData);
-    }
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
-
-    var width = 960 - margin.left - margin.right;
-    var height = 300 - margin.top - margin.bottom;
-
-    var parseDate = d3.time.format('%d-%b-%y').parse;
-
-    var x = d3.time.scale()
-        .range([0, width]);
-
-    var y = d3.scale.linear()
-        .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient('bottom');
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient('left');
-
-    var line = d3.svg.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
-
-    var svg = d3.select('#chart').append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-    d3.tsv('data.tsv', function(error, data) {
-        data.forEach(function(d) {
-            d.date = parseDate(d.date);
-            d.close = +d.close;
+        ehrData.generateData(function() {
+            ehrDataLoaded(ehr, ehrData, chart);
         });
-
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain(d3.extent(data, function(d) { return d.close; }));
-
-        svg.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis);
-
-        svg.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis)
-            .append('text')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', 6)
-            .attr('dy', '.71em')
-            .style('text-anchor', 'end')
-            .text('Price ($)');
-
-        svg.append('path')
-            .datum(data)
-            .attr('class', 'line')
-            .attr('d', line);
-    });
+    } else {
+        ehrDataLoaded(ehr, ehrData, chart);
+    }
 });

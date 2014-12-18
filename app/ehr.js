@@ -31,7 +31,7 @@ Ehr.prototype.defaultSuccessCallback = function(data) {
     console.log('Success: ' + JSON.stringify(data));
 };
 
-Ehr.prototype.sendRequest = function(method, url, data, successCallback, errorCallback) {
+Ehr.prototype.sendRequest = function(method, url, data, successCallback, errorCallback, async) {
     if (!this.sessionId) this.getSessionId();
 
     if (!errorCallback) errorCallback = this.defaultErrorCallback;
@@ -40,21 +40,22 @@ Ehr.prototype.sendRequest = function(method, url, data, successCallback, errorCa
     $.ajax({
         headers: {"Ehr-Session": this.sessionId},
         contentType: 'application/json',
-        data: JSON.stringify(data),
+        data: method != 'GET' ? JSON.stringify(data) : '',
         type: method,
         url: this.apiUrl + url,
         success: successCallback,
         error: errorCallback,
+        async: async,
         dataType: 'json'
     });
 };
 
 Ehr.prototype.createEhr = function(successCallback, errorCallback) {
-    this.sendRequest('POST', '/ehr', null, successCallback, errorCallback);
+    this.sendRequest('POST', '/ehr', null, successCallback, errorCallback, true);
 };
 
 Ehr.prototype.createDemographicEntry = function(data, successCallback, errorCallback) {
-    this.sendRequest('POST', '/demographics/party', data, successCallback, errorCallback);
+    this.sendRequest('POST', '/demographics/party', data, successCallback, errorCallback, true);
 };
 
 Ehr.prototype.createFullEhrRecord = function(data, successCallback, errorCallback) {
@@ -69,5 +70,27 @@ Ehr.prototype.createFullEhrRecord = function(data, successCallback, errorCallbac
 
             successCallback(response, data, ehrData.ehrId);
         }, errorCallback);
+    }, errorCallback);
+};
+
+Ehr.prototype.createCompositionEntry = function(composition, params, successCallback, errorCallback) {
+    this.sendRequest('POST', '/composition?' + $.param(params), composition, successCallback, errorCallback, false);
+};
+
+Ehr.prototype.prepareData = function(data, property) {
+    var prepared = [];
+
+    for (var index in data) {
+        prepared.push({date: new Date(data[index]['time']), value: data[index][property]});
+    }
+
+    return prepared;
+};
+
+Ehr.prototype.getEntries = function(ehrId, property, successCallback, errorCallback) {
+    var object = this;
+
+    this.sendRequest('GET', '/view/' + ehrId + '/' + property, [], function(data) {
+        successCallback(object.prepareData(data, property))
     }, errorCallback);
 };
