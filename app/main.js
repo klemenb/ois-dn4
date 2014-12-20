@@ -36,15 +36,29 @@ function ehrDataLoaded(ehr, ehrData, chart) {
         }
     });
 
+    // Register chart selector
+    $('.property').click(function() {
+        var selectedProperty = this;
+        var chartProperty = $(this).data('chart-property');
+        var chartName = $(this).data('chart-name');
+
+        ehr.getEntries(currentEhrId, chartProperty, function(data) {
+            $('#chart').html('');
+            chart.lineChart('#chart', data, chartName);
+
+            $('.property').removeClass('property-active');
+            $(selectedProperty).addClass('property-active');
+        }, null);
+    });
+
+    // Select default chart
+    $('#property-weight').click();
+
     // Re-use click animations and display current EHR
     toggleButton.click();
 
     // Update people selector
     loadSelector(currentEhrId, ehrData.get());
-
-    ehr.getEntries(currentEhrId, 'height', function(data) {
-        chart.lineChart('#chart', data);
-    }, null);
 }
 
 $(document).ready(function() {

@@ -58,6 +58,10 @@ Ehr.prototype.createDemographicEntry = function(data, successCallback, errorCall
     this.sendRequest('POST', '/demographics/party', data, successCallback, errorCallback, true);
 };
 
+Ehr.prototype.createCompositionEntry = function(composition, params, successCallback, errorCallback) {
+    this.sendRequest('POST', '/composition?' + $.param(params), composition, successCallback, errorCallback, false);
+};
+
 Ehr.prototype.createFullEhrRecord = function(data, successCallback, errorCallback) {
     var object = this;
 
@@ -73,10 +77,6 @@ Ehr.prototype.createFullEhrRecord = function(data, successCallback, errorCallbac
     }, errorCallback);
 };
 
-Ehr.prototype.createCompositionEntry = function(composition, params, successCallback, errorCallback) {
-    this.sendRequest('POST', '/composition?' + $.param(params), composition, successCallback, errorCallback, false);
-};
-
 Ehr.prototype.prepareData = function(data, property) {
     var prepared = [];
 
@@ -90,7 +90,14 @@ Ehr.prototype.prepareData = function(data, property) {
 Ehr.prototype.getEntries = function(ehrId, property, successCallback, errorCallback) {
     var object = this;
 
+    var internalProperties = {
+        body_temperature: 'temperature',
+        height: 'height',
+        weight: 'weight',
+        pulse: 'pulse'
+    };
+
     this.sendRequest('GET', '/view/' + ehrId + '/' + property, [], function(data) {
-        successCallback(object.prepareData(data, property))
+        successCallback(object.prepareData(data, internalProperties[property]))
     }, errorCallback);
 };
