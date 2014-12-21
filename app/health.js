@@ -8,7 +8,7 @@ Health.prototype.getHealthRisks = function(data, systolic) {
             'description': 'Your Body Mass Index (BMI) is over 25. This might indicate you are overweight.',
             'suggestions': [
                 'Please consult your doctor regarding proper diet and weight-loss plans.',
-                'Athletes with higher than average muscle mass can probably ingore this warning.'
+                'Athletes with higher than average muscle mass can probably ignore this warning.'
             ]
         });
     }
