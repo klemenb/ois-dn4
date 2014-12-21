@@ -1,0 +1,20 @@
+[
+  {
+    "agent": "Fish",
+    "recorded": "2012-10-31T19:00:00.000+01:00",
+    "impact": "Significant",
+    "certainty": "Confirmed"
+  },
+  {
+    "agent": "Soy",
+    "recorded": "2012-10-31T19:00:00.000+01:00",
+    "impact": "Significant",
+    "certainty": "Confirmed"
+  },
+  {
+    "agent": "Wheat",
+    "recorded": "2012-10-31T19:00:00.000+01:00",
+    "impact": "Significant",
+    "certainty": "Confirmed"
+  }
+]

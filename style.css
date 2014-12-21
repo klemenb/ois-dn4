@@ -52,12 +52,19 @@ body {
     display: inline-block;
     padding-top: 12px;
 }
-#ehr-toggle-button {
+.toggle-button {
+    display: inline-block;
     background-color: #00ABE8;
     font-size: 1.4rem;
     line-height: 1.8rem;
     padding: 6px 10px;
     cursor: pointer;
+}
+.toggle-button-light {
+    opacity: 0.8;
+}
+.toggle-button-light:hover {
+    opacity: 1;
 }
 .container-wide {
     display: none;
@@ -105,10 +112,13 @@ body {
     font-weight: 600;
     opacity: 0.95;
 }
+#chart {
+    overflow: hidden;
+}
 h2 {
     padding-top: 10px;
-    font-size: 1.7rem;
-    line-height: 1.8rem;
+    font-size: 1.8rem;
+    line-height: 1.9rem;
     font-style: italic;
 }
 .title-blue {
@@ -117,18 +127,65 @@ h2 {
 .title-light-blue {
     color: #00ABE8;
 }
-
-.axis path,
-.axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
+.row-gray {
+    padding-top: 10px;
+    background-color: #F1F1F1;
+    color: #333;
 }
-.x.axis path {
-    display: none;
+.description-small {
+    font-size: 0.85em;
 }
-.line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 1.5px;
+#allergies {
+    list-style-type: square;
+    padding-left: 20px;
+}
+#allergies li {
+    line-height: 2.4rem;
+}
+#allergies a {
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.row-footer {
+    padding: 30px 0 0 0;
+    color: #666;
+    font-size: 1.2rem;
+    text-align: right;
+}
+.search-query {
+    font-weight: 600;
+    font-style: italic;
+    padding-bottom: 10px;
+}
+.search-text {
+    padding-bottom: 5px;
+}
+.search-source a {
+    color: #333;
+    text-decoration: underline;
+}
+.search-source a:hover {
+    color: #00ABE8;
+}
+.search-url {
+    font-size: 1rem;
+    padding-bottom: 15px;
+}
+.health-risk-description {
+    color: #A00000;
+    font-size: 1.4rem;
+    line-height: 2.8rem;
+}
+.health-risk-none {
+    color: #006400;
+    padding-bottom: 10px;
+}
+.health-risk-suggestions {
+    padding: 0 0 15px 15px;
+    line-height: 2.1rem;
+}
+.health-risk-suggestions a {
+    color: inherit;
+    text-decoration: underline;
 }

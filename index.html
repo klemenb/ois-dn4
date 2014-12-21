@@ -25,6 +25,9 @@
         <script src="app/ehr.js"></script>
         <script src="app/ehrData.js"></script>
         <script src="app/chart.js"></script>
+        <script src="app/search.js"></script>
+        <script src="app/whoData.js"></script>
+        <script src="app/health.js"></script>
         <script src="app/main.js"></script>
 	</head>
 	<body>
@@ -37,8 +40,11 @@
                     <i class="fa fa-medkit"></i> OIS Health <em>preview</em>
                 </div>
                 <div class="ehr-toggle">
-                    <div id="ehr-toggle-button">
+                    <div id="ehr-toggle-button" class="toggle-button">
                         Toggle EHR / MAP display
+                    </div>
+                    <div id="ehr-generate-button" class="toggle-button toggle-button-light" style="display: none;">
+                        (Re)generate dummy EHR data
                     </div>
                 </div>
                 <div class="nav navbar-nav navbar-right navbar-user">
@@ -64,53 +70,48 @@
                     <div class="clearfix container-properties">
                         <div class="property property-no-hover">
                             <span class="property-text">gender</span>
-                            <span class="property-value" id="property-gender"><i class="fa fa-female"></i></span>
+                            <span class="property-value" id="property-gender">...</span>
                         </div>
                         <div class="property property-no-hover">
                             <span class="property-text">age</span>
-                            <span class="property-value" id="property-age">24</span>
+                            <span class="property-value" id="property-age">...</span>
                         </div>
                         <div class="property property-active" title="Switch to height chart"
-                             data-chart-property="height" data-chart-name="Height [cm]" data-chart-type="line">
+                             data-chart-property="height" data-chart-name="Height [cm]" data-chart-type="lineChart">
                             <span class="property-text">height</span>
-                            <span class="property-value" id="property-height">180 cm</span>
+                            <span class="property-value" id="property-height">...</span>
                         </div>
                         <div class="property" title="Switch to weight chart"
-                             data-chart-property="weight" data-chart-name="Weight [kg]" data-chart-type="bar">
+                             data-chart-property="weight" data-chart-name="Weight [kg]" data-chart-type="lineChart">
                             <span class="property-text">weight</span>
-                            <span class="property-value" id="property-weight">80 kg</span>
+                            <span class="property-value" id="property-weight">...</span>
                         </div>
                         <div class="property" title="Switch to BMI chart"
-                             data-chart-property="BMI" data-chart-name="BMI" data-chart-type="line">
+                             data-chart-property="BMI" data-chart-name="BMI" data-chart-type="lineChart">
                             <span class="property-text">BMI</span>
-                            <span class="property-value" id="property-bmi">25</span>
+                            <span class="property-value" id="property-bmi">...</span>
                         </div>
                         <div class="property" title="Switch to temperature chart"
-                             data-chart-property="body_temperature" data-chart-name="Temperature [°C]" data-chart-type="bar">
+                             data-chart-property="body_temperature" data-chart-name="Temperature [°C]" data-chart-type="lineChart">
                             <span class="property-text">temp.</span>
-                            <span class="property-value" id="property-temperature">36 °C</span>
+                            <span class="property-value" id="property-temperature">...</span>
                         </div>
                         <div class="property" title="Switch to blood pressure chart"
-                             data-chart-property="blood_pressure" data-chart-name="Blood pressure [sys/dia]" data-chart-type="line">
+                             data-chart-property="blood_pressure" data-chart-name="Blood pressure [sys/dia, mm Hg]" data-chart-type="multiLineChart">
                             <span class="property-text">blood pressure</span>
-                            <span class="property-value" id="property-blood-presure">120/80 mm Hg</span>
+                            <span class="property-value" id="property-blood-pressure">...</span>
                         </div>
                         <div class="property" title="Switch to pulse chart"
-                             data-chart-property="pulse" data-chart-name="Pulse" data-chart-type="line">
+                             data-chart-property="pulse" data-chart-name="Pulse [bpm]" data-chart-type="lineChart">
                             <span class="property-text">pulse</span>
-                            <span class="property-value" id="property-pulse">66 bpm</span>
+                            <span class="property-value" id="property-pulse">...</span>
                         </div>
                         <div class="property" title="Switch to oxygenation chart"
-                             data-chart-property="spO2" data-chart-name="Oxygenation [SpO2]" data-chart-type="line">
+                             data-chart-property="spO2" data-chart-name="Oxygenation [SpO2]" data-chart-type="lineChart">
                             <span class="property-text">oxygenation</span>
-                            <span class="property-value" id="property-oxygenation">98 %</span>
+                            <span class="property-value" id="property-oxygenation">...</span>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="title-blue">Height chart</h2>
                 </div>
             </div>
             <div class="row">
@@ -118,6 +119,43 @@
                     <div id="chart">
 
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="title-blue">Health risks</h2>
+                </div>
+            </div>
+            <div class="row row-gray">
+                <div class="col-md-12">
+                    <div id="health-risks">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="title-blue">Current allergies</h2>
+                </div>
+            </div>
+            <div class="row row-gray">
+                <div class="col-md-6">
+                    <p class="description-small">
+                        Click on allergy name for more information. <br />Search results are provided by <strong>DuckDuckGo</strong> (duckduckgo.com/api).
+                    </p>
+                    <ul id="allergies">
+                        <li><a href="#">Loading...</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <div id="search-result">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row row-footer">
+                <div class="col-md-12">
+                    Copyright &copy; 2014, Klemen Bratec
                 </div>
             </div>
         </div>

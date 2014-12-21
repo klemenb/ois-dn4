@@ -50,11 +50,19 @@ Ehr.prototype.sendRequest = function(method, url, data, successCallback, errorCa
     });
 };
 
+Ehr.prototype.getAqlResults = function(ehrId, aql, successCallback, errorCallback) {
+    this.sendRequest('GET', '/query?' + $.param({aql: aql}), null, successCallback, errorCallback, false);
+};
+
+Ehr.prototype.getDemographicsEntry = function(ehrId, successCallback, errorCallback) {
+    this.sendRequest('GET', '/demographics/ehr/' + ehrId  +'/party', null, successCallback, errorCallback, false);
+};
+
 Ehr.prototype.createEhr = function(successCallback, errorCallback) {
     this.sendRequest('POST', '/ehr', null, successCallback, errorCallback, true);
 };
 
-Ehr.prototype.createDemographicEntry = function(data, successCallback, errorCallback) {
+Ehr.prototype.createDemographicsEntry = function(data, successCallback, errorCallback) {
     this.sendRequest('POST', '/demographics/party', data, successCallback, errorCallback, true);
 };
 
@@ -68,7 +76,7 @@ Ehr.prototype.createFullEhrRecord = function(data, successCallback, errorCallbac
     this.createEhr(function(ehrData) {
         data.partyAdditionalInfo = [{key: "ehrId", value: ehrData.ehrId}];
 
-        object.createDemographicEntry(data, function(response) {
+        object.createDemographicsEntry(data, function(response) {
             console.log('Demographic entry created for "' + data.firstNames + ' ' + data.lastNames +
                 '" (' + ehrData.ehrId + ')');
 
@@ -87,17 +95,54 @@ Ehr.prototype.prepareData = function(data, property) {
     return prepared;
 };
 
+Ehr.prototype.prepareExtendedData = function(data, properties) {
+    var prepared = [];
+
+    for (var index in data) {
+        var entry = {date: new Date(data[index]['time'])};
+
+        for (var pIndex in properties) {
+            entry[properties[pIndex]] = data[index][properties[pIndex]];
+        }
+
+        prepared.push(entry);
+    }
+
+    return prepared;
+};
+
 Ehr.prototype.getEntries = function(ehrId, property, successCallback, errorCallback) {
     var object = this;
 
-    var internalProperties = {
+    var extendedProperties = {
+        blood_pressure: [ 'systolic', 'diastolic' ]
+    };
+
+    var basicProperties = {
         body_temperature: 'temperature',
+        blood_pressure: 'blood_pressure',
         height: 'height',
         weight: 'weight',
-        pulse: 'pulse'
+        pulse: 'pulse',
+        spO2: 'spO2'
     };
 
     this.sendRequest('GET', '/view/' + ehrId + '/' + property, [], function(data) {
-        successCallback(object.prepareData(data, internalProperties[property]))
+        if (typeof extendedProperties[property] == 'undefined') {
+            successCallback(object.prepareData(data, basicProperties[property]))
+        } else {
+            successCallback(object.prepareExtendedData(data, extendedProperties[property]))
+        }
     }, errorCallback);
+};
+
+Ehr.prototype.getAllergyEntries = function(index, successCallback, errorCallback) {
+    $.ajax({
+        contentType: 'application/json',
+        type: 'GET',
+        url: 'cache/allergies_' + index + '.json',
+        success: successCallback,
+        error: errorCallback,
+        dataType: 'json'
+    });
 };

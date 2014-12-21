@@ -1,0 +1,212 @@
+{
+  "copyright": "(c) World Health Organization",
+  "dataset":
+  [
+    {
+      "label": "FCD",
+      "display": "FACT_CORE_DATA"
+    }
+  ],
+  "attribute":
+  [
+  ],
+  "dimension":
+  [
+    {
+      "label": "GHO",
+      "display": "Indicator",
+      "isMeasure": true,
+      "code":
+      [
+        {
+          "label": "BP_06",
+          "display": "Mean systolic blood pressure (age-standardized estimate)",
+          "display_sequence": 0,
+          "url": "http://apps.who.int/gho/indicatorregistry/App_Main/view_indicator.aspx?iid=2387",
+          "attr":
+          [
+          ]
+        }
+      ]
+    },
+    {
+      "label": "PUBLISHSTATE",
+      "display": "PUBLISH STATES",
+      "isMeasure": false,
+      "code":
+      [
+        {
+          "label": "PUBLISHED",
+          "display": "Published",
+          "display_sequence": 0,
+          "url": "",
+          "attr":
+          [
+          ]
+        }
+      ]
+    },
+    {
+      "label": "YEAR",
+      "display": "Year",
+      "isMeasure": false,
+      "code":
+      [
+        {
+          "label": "2008",
+          "display": "2008",
+          "display_sequence": 385,
+          "url": "",
+          "attr":
+          [
+          ]
+        }
+      ]
+    },
+    {
+      "label": "REGION",
+      "display": "WHO region",
+      "isMeasure": false,
+      "code":
+      [
+        {
+          "label": "GLOBAL",
+          "display": "Global",
+          "display_sequence": 100,
+          "url": "",
+          "attr":
+          [
+          ]
+        }
+      ]
+    },
+    {
+      "label": "AGEGROUP",
+      "display": "Age Group",
+      "isMeasure": false,
+      "code":
+      [
+        {
+          "label": "AGE25-PLUS",
+          "display": "25+",
+          "display_sequence": 0,
+          "url": "",
+          "attr":
+          [
+          ]
+        }
+      ]
+    },
+    {
+      "label": "SEX",
+      "display": "Sex",
+      "isMeasure": false,
+      "code":
+      [
+        {
+          "label": "MLE",
+          "display": "Male",
+          "display_sequence": 1,
+          "url": "",
+          "attr":
+          [
+          ]
+        },
+        {
+          "label": "FMLE",
+          "display": "Female",
+          "display_sequence": 2,
+          "url": "",
+          "attr":
+          [
+          ]
+        }
+      ]
+    }
+  ],
+  "fact":
+  [
+    {
+      "fact_id": 737813,
+      "dataset": "FCD",
+      "effective_date": "1900-01-01",
+      "end_date": "2900-12-31",
+      "published": true,
+      "Dim":
+      [
+        {
+          "category": "GHO",
+          "code": "BP_06"
+        },
+        {
+          "category": "YEAR",
+          "code": "2008"
+        },
+        {
+          "category": "SEX",
+          "code": "FMLE"
+        },
+        {
+          "category": "AGEGROUP",
+          "code": "AGE25-PLUS"
+        },
+        {
+          "category": "REGION",
+          "code": "GLOBAL"
+        },
+        {
+          "category": "PUBLISHSTATE",
+          "code": "PUBLISHED"
+        }
+      ],
+      "value":
+      {
+        "display": "124.6 [123.2-126.0]",
+        "numeric": null,
+        "low": null,
+        "high": null
+      }
+    },
+    {
+      "fact_id": 737812,
+      "dataset": "FCD",
+      "effective_date": "1900-01-01",
+      "end_date": "2900-12-31",
+      "published": true,
+      "Dim":
+      [
+        {
+          "category": "GHO",
+          "code": "BP_06"
+        },
+        {
+          "category": "YEAR",
+          "code": "2008"
+        },
+        {
+          "category": "SEX",
+          "code": "MLE"
+        },
+        {
+          "category": "AGEGROUP",
+          "code": "AGE25-PLUS"
+        },
+        {
+          "category": "REGION",
+          "code": "GLOBAL"
+        },
+        {
+          "category": "PUBLISHSTATE",
+          "code": "PUBLISHED"
+        }
+      ],
+      "value":
+      {
+        "display": "128.2 [126.8-129.6]",
+        "numeric": null,
+        "low": null,
+        "high": null
+      }
+    }
+  ]
+}

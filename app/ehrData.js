@@ -24,6 +24,18 @@ EhrData.prototype.getDefaultEhrId = function() {
     return null;
 };
 
+EhrData.prototype.getEhrIdIndex = function(ehrId) {
+    var data = this.get();
+    var index = 0;
+
+    for (var id in data) {
+        if (id == ehrId) return index;
+        index++;
+    }
+
+    return 0;
+};
+
 EhrData.prototype.isAvailable = function() {
     return localStorage.getItem('ehrData') !== null;
 };
@@ -40,20 +52,19 @@ EhrData.prototype.storeEhrData = function(response, data, ehrId) {
 };
 
 EhrData.prototype.generateCompositeData = function(ehrId, time, temperature, systolic, diastolic,
-                                                   height, weight, successCallback, errorCallback) {
-    var bmi = weight / ((height / 100) * (height / 100));
-
+                                                   height, weight, pulse, spO2, successCallback, errorCallback) {
     var composition = {
-        "ctx/time": time,
-        "ctx/language": "en",
-        "ctx/territory": "SI",
-        "vital_signs/body_temperature/any_event/temperature|magnitude": temperature,
-        "vital_signs/body_temperature/any_event/temperature|unit": "°C",
-        "vital_signs/blood_pressure/any_event/systolic": systolic,
-        "vital_signs/blood_pressure/any_event/diastolic": diastolic,
-        "vital_signs/height_length/any_event/body_height_length": height,
-        "vital_signs/body_weight/any_event/body_weight": weight,
-        "vital_signs/body_mass_index/any_event/body_mass_index": bmi
+        'ctx/time': time,
+        'ctx/language': 'en',
+        'ctx/territory': 'SI',
+        'vital_signs/body_temperature/any_event/temperature|magnitude': temperature,
+        'vital_signs/body_temperature/any_event/temperature|unit': '°C',
+        'vital_signs/blood_pressure/any_event/systolic': systolic,
+        'vital_signs/blood_pressure/any_event/diastolic': diastolic,
+        'vital_signs/height_length/any_event/body_height_length': height,
+        'vital_signs/body_weight/any_event/body_weight': weight,
+        'vital_signs/indirect_oximetry:0/spo2|numerator': spO2,
+        'vital_signs/pulse/any_event/rate': pulse
     };
 
     var params = {
@@ -94,27 +105,44 @@ EhrData.prototype.generateData = function(successCallback, errorCallback) {
     var object = this;
 
     this.ehr.createFullEhrRecord(johnWilliams, function(response, data, ehrId) {
-        object.generateCompositeData(ehrId, '2014-01-10T08:00Z', 36, 120, 80, 178, 80, null, null);
-        object.generateCompositeData(ehrId, '2014-02-10T08:00Z', 36.2, 120, 82, 178, 80, null, null);
-        object.generateCompositeData(ehrId, '2014-03-10T08:00Z', 36, 128, 86, 178, 80, null, null);
-        object.generateCompositeData(ehrId, '2014-04-10T08:00Z', 36.4, 130, 90, 178, 80, null, null);
-        object.generateCompositeData(ehrId, '2014-05-10T08:00Z', 36.8, 160, 100, 179, 84, null, null);
-        object.generateCompositeData(ehrId, '2014-06-10T08:00Z', 36.8, 122, 82, 179, 86, null, null);
-        object.generateCompositeData(ehrId, '2014-07-10T08:00Z', 36.8, 120, 80, 179, 82, null, null);
-        object.generateCompositeData(ehrId, '2014-08-10T08:00Z', 36.4, 120, 80, 180, 80, null, null);
-        object.generateCompositeData(ehrId, '2014-09-10T08:00Z', 36.9, 160, 120, 180, 78, null, null);
-        object.generateCompositeData(ehrId, '2014-10-10T08:00Z', 37.8, 90, 60, 180, 76, null, null);
-        object.generateCompositeData(ehrId, '2014-11-10T08:00Z', 38, 110, 70, 180, 74, null, null);
-        object.generateCompositeData(ehrId, '2014-12-10T08:00Z', 36.2, 120, 80, 180, 72, null, null);
+        object.generateCompositeData(ehrId, '2014-04-10T08:00Z', 36.4, 130, 90, 178, 80, 72, 98, null, null);
+        object.generateCompositeData(ehrId, '2014-05-10T08:00Z', 36.8, 160, 100, 179, 84, 56, 98, null, null);
+        object.generateCompositeData(ehrId, '2014-06-10T08:00Z', 36.8, 122, 82, 179, 86, 52, 94, null, null);
+        object.generateCompositeData(ehrId, '2014-07-10T08:00Z', 36.8, 120, 80, 179, 82, 50, 96, null, null);
+        object.generateCompositeData(ehrId, '2014-08-10T08:00Z', 36.4, 120, 80, 180, 80, 50, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-09-10T08:00Z', 36.9, 160, 120, 180, 96, 50, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-10-10T08:00Z', 37.8, 154, 85, 180, 98, 60, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-11-10T08:00Z', 38, 140, 88, 180, 105, 62, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-12-10T08:00Z', 36.2, 142, 85, 180, 108, 64, 99, null, null);
 
         object.storeEhrData(response, data, ehrId);
     });
 
     this.ehr.createFullEhrRecord(sarahJohnson, function(response, data, ehrId) {
+        object.generateCompositeData(ehrId, '2014-04-10T08:00Z', 36.2, 130, 90, 164, 54, 72, 98, null, null);
+        object.generateCompositeData(ehrId, '2014-05-10T08:00Z', 36.2, 160, 100, 165, 48, 56, 98, null, null);
+        object.generateCompositeData(ehrId, '2014-06-10T08:00Z', 36.4, 122, 82, 165, 50, 52, 94, null, null);
+        object.generateCompositeData(ehrId, '2014-07-10T08:00Z', 36.6, 120, 80, 165, 52, 50, 96, null, null);
+        object.generateCompositeData(ehrId, '2014-08-10T08:00Z', 36.4, 120, 80, 165, 54, 50, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-09-10T08:00Z', 36.6, 130, 70, 165, 52, 50, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-10-10T08:00Z', 37.8, 130, 70, 165, 46, 60, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-11-10T08:00Z', 38, 140, 80, 165, 42, 62, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-12-10T08:00Z', 38.6, 140, 80, 165, 42, 64, 99, null, null);
+
         object.storeEhrData(response, data, ehrId);
     });
 
     this.ehr.createFullEhrRecord(robertSmith, function(response, data, ehrId) {
+        object.generateCompositeData(ehrId, '2014-04-10T08:00Z', 36.2, 130, 90, 178, 70, 72, 98, null, null);
+        object.generateCompositeData(ehrId, '2014-05-10T08:00Z', 36.2, 135, 100, 179, 72, 56, 98, null, null);
+        object.generateCompositeData(ehrId, '2014-06-10T08:00Z', 36.4, 122, 82, 179, 71, 52, 94, null, null);
+        object.generateCompositeData(ehrId, '2014-07-10T08:00Z', 36.6, 132, 80, 179, 74, 50, 96, null, null);
+        object.generateCompositeData(ehrId, '2014-08-10T08:00Z', 36.4, 126, 80, 180, 72, 50, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-09-10T08:00Z', 36.6, 131, 75, 180, 78, 50, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-10-10T08:00Z', 36.2, 125, 75, 180, 76, 54, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-11-10T08:00Z', 36.1, 129, 80, 180, 74, 62, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-12-10T08:00Z', 36.4, 130, 80, 180, 75, 59, 99, null, null);
+
         object.storeEhrData(response, data, ehrId);
     });
 };
