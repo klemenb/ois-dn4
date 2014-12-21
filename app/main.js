@@ -79,7 +79,7 @@ function loadAllergies() {
 
         // Create allergy list entries
         for (var index in data) {
-            container.append('<li><a href="#">' + data[index].agent + '</a></li>');
+            container.append('<li><a href="#allergies">' + data[index].agent + '</a></li>');
         }
 
         // Register search events

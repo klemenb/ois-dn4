@@ -112,8 +112,8 @@ EhrData.prototype.generateData = function(successCallback, errorCallback) {
         object.generateCompositeData(ehrId, '2014-08-10T08:00Z', 36.4, 120, 80, 180, 80, 50, 99, null, null);
         object.generateCompositeData(ehrId, '2014-09-10T08:00Z', 36.9, 160, 120, 180, 96, 50, 99, null, null);
         object.generateCompositeData(ehrId, '2014-10-10T08:00Z', 37.8, 154, 85, 180, 98, 60, 99, null, null);
-        object.generateCompositeData(ehrId, '2014-11-10T08:00Z', 38, 140, 88, 180, 105, 62, 99, null, null);
-        object.generateCompositeData(ehrId, '2014-12-10T08:00Z', 36.2, 142, 85, 180, 108, 64, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-11-10T08:00Z', 38, 140, 88, 180, 96, 62, 99, null, null);
+        object.generateCompositeData(ehrId, '2014-12-10T08:00Z', 36.2, 142, 85, 180, 94, 64, 99, null, null);
 
         object.storeEhrData(response, data, ehrId);
     });

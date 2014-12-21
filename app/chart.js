@@ -1,6 +1,14 @@
-var Chart = function() {};
+var Chart = function() {
+    $(window).resize(function() {
+        if (Chart.lastChart != null) {
+            Chart.lastChart.draw(0, null);
+        }
+    });
+};
 
-Chart.prototype.width = 1138;
+Chart.lastChart = null;
+
+Chart.prototype.width = '100%';
 
 Chart.prototype.height = 300;
 
@@ -22,7 +30,7 @@ Chart.prototype.prepareChart = function(container, data, axisName) {
     chart.setMargins(this.margin.left, this.margin.top, this.margin.right, this.margin.bottom);
 
     var x = chart.addTimeAxis('x', 'date', null, this.dateFormat);
-    x.title = 'Measurement date';
+    x.title = '';
 
     var y = chart.addMeasureAxis('y', 'value');
     y.title = axisName;
@@ -48,6 +56,7 @@ Chart.prototype.lineChart = function(container, data, axisName, color) {
     };
 
     chart.draw();
+    Chart.lastChart = chart;
 };
 
 Chart.prototype.multiLineChart = function(container, data, axisName, colors) {
@@ -73,4 +82,5 @@ Chart.prototype.multiLineChart = function(container, data, axisName, colors) {
 
     chart.addLegend(this.margin.left, this.height - this.margin.top + 28, 600, 50);
     chart.draw();
+    Chart.lastChart = chart;
 };
